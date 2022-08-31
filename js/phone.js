@@ -1,39 +1,33 @@
 
-const loadPhones = async(searchText) => {
+const loadPhones = async(searchText,dataLimit) => {
   const url = ` https://openapi.programming-hero.com/api/phones?search=${searchText}`
   console.log(url);
   const res = await fetch(url);
   const data = await res.json();
-  displayPhones(data.data);
+  displayPhones(data.data,dataLimit);
    /*  fetch(url)
         .then(res => res.json())
         .then(data => displayPhones(data.data)); */
     
 }
-const displayPhones = phones => {
+const displayPhones = (phones,dataLimit) => {
 
   const phoneContainer = document.getElementById('phone-container');
   phoneContainer.innerHTML = '';
 
 // Display 10 phones Only
   const showAll = document.getElementById('show-all');
-  if (phones.length > 10) {
+  if (dataLimit && phones.length > 10) {
     phones = phones.slice(0, 10);
     showAll.classList.remove('d-none');
   }
   else {
     showAll.classList.add('d-none');
   }
-
-
-
-
-
-
 //Display no phone found
   const noFoundPhones = document.getElementById('display-no-message');
   //const noValue = noFoundPhones.value;
-  if (phones.length=== 0) {
+  if ( phones.length=== 0) {
     noFoundPhones.classList.remove('d-none');
   }
   else {
@@ -63,17 +57,19 @@ const displayPhones = phones => {
     // spinner stop................... 
     console.log(phones);
 }
-
-
-document.getElementById('btn-search').addEventListener('click', function () {
-  
- // spinner start..................
+// process search
+const processSearch = (dataLimit) => {
+  // spinner start..................
   toggleSpinner(true); 
   
   const textField = document.getElementById('input-field');
   const searchText = textField.value;
-  loadPhones(searchText);
-  console.log(searchText);
+  loadPhones(searchText,dataLimit);
+}
+
+document.getElementById('btn-search').addEventListener('click', function () {
+  
+  processSearch(10);
 
 })
 // Toggle spinner function...
@@ -87,7 +83,10 @@ const toggleSpinner = isLoading => {
     loaderSpinner.classList.add('d-none');
   }
 } 
-
+// Not the best way to load show all
+document.getElementById('show-all-btn').addEventListener('click', function () {
+  processSearch();
+})
 
 
 
