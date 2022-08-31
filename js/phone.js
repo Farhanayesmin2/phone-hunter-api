@@ -48,7 +48,7 @@ const displayPhones = (phones,dataLimit) => {
             natural lead-in to additional content. This content is a
             little bit longer.
           </p>
-          <button onClick="loadPhoneDetails(${phone.slug})" class="btn btn-info shadow-lg p-2 mb-4 text-bold bg-body text-info border-info border border-3 rounded">Show Details</button>
+          <button onClick="loadPhoneDetails('${phone.slug}')" class="btn btn-info shadow-lg p-2 mb-4 text-bold bg-body text-info border-info border border-3 rounded" data-bs-toggle="modal" data-bs-target="#modalDetail">Show Details</button>
         </div>
       </div>
         `;
@@ -98,16 +98,34 @@ document.getElementById('input-field').addEventListener('keypress', function (e)
 
 // View details
 
-const loadPhoneDetails = async id => {
-  const url = `https://openapi.programming-hero.com/api/phone/${id}`
+const loadPhoneDetails= async id => {
+  const url = `https://openapi.programming-hero.com/api/phone/${id}`;
   const res = await fetch(url);
   const data = await res.json();
-  console.log(data);
+  loadPhoneDetailsDisplay(data.data);
+}
+const loadPhoneDetailsDisplay = phone => {
+  const modalTitle = document.getElementById('modalDetailLabel');
+  modalTitle.innerText = phone.name;
+
+  const modalBody = document.getElementById('modal-body-detail');
+  modalBody.innerHTML = `
+  <img src="${phone.image}" alt="">
+  <p>Realse Date: ${phone.releaseDate ? phone.releaseDate: 'No Realse Date Found.' }</p>
+  <h2>Phone Details: </h2>
+
+ <p> DisplaySize:${phone.mainFeatures.displaySize} </p>
+ <p> Memory: ${phone.mainFeatures.memory}  </p>
+  Storage:${phone.mainFeatures.storage}
+  </p>
+  <h3>Other Details: </h3>
+  <p>Bluetooth: ${phone.others ? phone.others.bluetooth: 'No Bluetooth information Found.' }</p>
+  `;
+  console.log(phone);
 }
 
 
-
-loadPhones();
+loadPhones('oppo');
 
 
 
