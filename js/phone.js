@@ -15,7 +15,7 @@ const displayPhones = phones => {
   const phoneContainer = document.getElementById('phone-container');
   phoneContainer.innerHTML = '';
 // Display 20 phones 
-  phones = phones.slice(0, 20);
+  phones = phones.slice(0, 30);
 //Display no phone found
   const noFoundPhones = document.getElementById('display-no-message');
   //const noValue = noFoundPhones.value;
@@ -43,21 +43,18 @@ const displayPhones = phones => {
       </div>
         `;
         phoneContainer.appendChild(phoneDiv);
-
-
-
-
+      
     })
-  
+     toggleSpinner(false);
+    // spinner stop................... 
     console.log(phones);
 }
 
 
 document.getElementById('btn-search').addEventListener('click', function () {
   
-
-  
-  
+ // spinner start..................
+  toggleSpinner(true); 
   
   const textField = document.getElementById('input-field');
   const searchText = textField.value;
@@ -65,7 +62,17 @@ document.getElementById('btn-search').addEventListener('click', function () {
   console.log(searchText);
 
 })
+// Toggle spinner function...
+const toggleSpinner = isLoading => {
+  const loaderSpinner = document.getElementById('loader');
 
+  if (isLoading) {
+    loaderSpinner.classList.remove('d-none');
+  }
+  else {
+    loaderSpinner.classList.add('d-none');
+  }
+} 
 
 
 
