@@ -14,8 +14,22 @@ const displayPhones = phones => {
 
   const phoneContainer = document.getElementById('phone-container');
   phoneContainer.innerHTML = '';
-// Display 20 phones 
-  phones = phones.slice(0, 30);
+
+// Display 10 phones Only
+  const showAll = document.getElementById('show-all');
+  if (phones.length > 10) {
+    phones = phones.slice(0, 10);
+    showAll.classList.remove('d-none');
+  }
+  else {
+    showAll.classList.add('d-none');
+  }
+
+
+
+
+
+
 //Display no phone found
   const noFoundPhones = document.getElementById('display-no-message');
   //const noValue = noFoundPhones.value;
