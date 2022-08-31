@@ -125,7 +125,7 @@ const loadPhoneDetailsDisplay = phone => {
 }
 
 
-loadPhones('oppo');
+//loadPhones();
 
 
 
