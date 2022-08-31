@@ -8,6 +8,7 @@ const loadPhones = async(searchText,dataLimit) => {
    /*  fetch(url)
         .then(res => res.json())
         .then(data => displayPhones(data.data)); */
+        console.log(data);
     
 }
 const displayPhones = (phones,dataLimit) => {
@@ -47,6 +48,7 @@ const displayPhones = (phones,dataLimit) => {
             natural lead-in to additional content. This content is a
             little bit longer.
           </p>
+          <button onClick="loadPhoneDetails(${phone.slug})" class="btn btn-info shadow-lg p-2 mb-4 text-bold bg-body text-info border-info border border-3 rounded">Show Details</button>
         </div>
       </div>
         `;
@@ -55,7 +57,7 @@ const displayPhones = (phones,dataLimit) => {
     })
      toggleSpinner(false);
     // spinner stop................... 
-    console.log(phones);
+    //console.log(phones);
 }
 // process search
 const processSearch = (dataLimit) => {
@@ -87,11 +89,25 @@ const toggleSpinner = isLoading => {
 document.getElementById('show-all-btn').addEventListener('click', function () {
   processSearch();
 })
+// search input field enter key handler
+document.getElementById('input-field').addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    processSearch(10);
+ }
+})
+
+// View details
+
+const loadPhoneDetails = async id => {
+  const url = `https://openapi.programming-hero.com/api/phone/${id}`
+  const res = await fetch(url);
+  const data = await res.json();
+  console.log(data);
+}
 
 
 
-
-//loadPhones();
+loadPhones();
 
 
 
